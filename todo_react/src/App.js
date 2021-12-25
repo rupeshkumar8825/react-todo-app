@@ -2,6 +2,7 @@
 import React from 'react';
 import "./index.css"
 import { useState } from 'react';
+import Todolist from './Todolist';
 
 // defining the function component of the app 
 function App() {
@@ -28,11 +29,25 @@ function App() {
   function handleOnClickEvent() {
     // we have to add the value of this task to the list of the todolist yet 
     setTodolist([...todolist, task]);
-
+    setTask("");
     // say everything went fine 
     return;
   }
 
+
+  // defining the function to delete the current todolist 
+  function deleteItems(id) {
+    console.log("the item is deleted");
+    // then we have to delete the element of index id 
+    // we can use the filter function for deleting the todolist 
+    setTodolist((olditems) => {
+      return olditems.filter((arrelem, index) => {
+        return index !== id;
+      });
+    });
+    // say everything went fine 
+    return;
+  }
   // say everything went fine 
   return (
     <>
@@ -51,8 +66,9 @@ function App() {
           <ul className='todolist'>
             {/* we have to add the all the list here in the frontend part  */}
             {/* using the map function for this purpose  */}
-            {todolist.map((itemval) => {
-              return <li>{itemval} </li>
+            {todolist.map((itemval, index) => {
+              {/* passing the component and the corresponding props  */ }
+              return <Todolist task={itemval} key={index} id={index} onSelect={deleteItems}></Todolist>
             })}
           </ul>
         </div>
